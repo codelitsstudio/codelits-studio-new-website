@@ -1,11 +1,8 @@
-# CodeLits Studio - Next.js Digital Agency Website
+# CodeLits Studio - Next.js New Updated Website
 
-<div align="center">
-  <img src="https://placehold.co/600x300.png" alt="CodeLits Studio Banner" data-ai-hint="digital agency dashboard" style="border-radius: 8px;"/>
-</div>
 
 <p align="center">
-  A cutting-edge, feature-rich digital agency website built with Next.js, ShadCN UI, and an integrated AI content assistant powered by Genkit.
+  A cutting-edge, feature-rich website built with Next.js, ShadCN UI, and an integrated AI content assistant powered by Genkit.
 </p>
 
 ---
