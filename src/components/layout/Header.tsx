@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -68,17 +67,18 @@ const mobileNavLinks = [
   { href: "https://saas.codelitsstudio.com/", label: "SaaS Hub", icon: Code },
   { href: "/ai", label: "AI Tools", icon: Bot },
   { href: "/blog", label: "Blog", icon: PencilLine },
-  { href: "/team", label: "About Us", icon: Users },
+  { href: "/studio", label: "Studio", icon: Users },
   { href: "/contact", label: "Contact", icon: Phone },
 ];
 
 export function Header() {
+  
   const pathname = usePathname();
   
-  //  prevent hook mismatch
   if (pathname?.startsWith("/admin")) return null;
 
   const headerRef = useRef<HTMLElement>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -121,11 +121,37 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const startLoader = () => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+    gsap.killTweensOf(loader);
+    gsap.set(loader, { width: 0, autoAlpha: 1 });
+    gsap.to(loader, { width: "80%", duration: 1.2, ease: "power1.inOut" });
+  };
+
+  useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+    gsap.killTweensOf(loader);
+    gsap.to(loader, {
+      width: "100%",
+      duration: 0.3,
+      ease: "power1.out",
+      onComplete: () => {
+        gsap.to(loader, {
+          autoAlpha: 0,
+          duration: 0.3,
+          delay: 0.1,
+          onComplete: () => { gsap.set(loader, { width: 0 }); },
+        });
+      },
+    });
+  }, [pathname]);
+
   return (
     <header ref={headerRef} className="sticky top-0 z-50 w-full p-2 md:p-4">
       <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" onClick={startLoader}>
           <Image
             src="/logos/logo.png"
             alt="CodeLits Studio Logo"
@@ -139,94 +165,92 @@ export function Header() {
         <NavigationMenu className="hidden md:flex gap-4">
           <NavigationMenuList className="flex gap-4 text-sm font-medium items-center">
             {/* Dropdown: Work */}
-   <NavigationMenuItem>
-  <NavigationMenuTrigger>
-    <Link href="/portfolio" className="nav-click-anim">
-      Work
-    </Link>
-  </NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
-      {workItems.map((item) => (
-        <ListItem key={item.title} title={item.title} href={item.href}>
-          {item.description}
-        </ListItem>
-      ))}
-    </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Link href="/portfolio" className="nav-click-anim" onClick={startLoader}>
+                  Work
+                </Link>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
+                  {workItems.map((item) => (
+                    <ListItem key={item.title} title={item.title} href={item.href} onClick={startLoader}>
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
 
             {/* Dropdown: Services */}
-       <NavigationMenuItem>
-  <NavigationMenuTrigger>
-    <Link href="/services" className="nav-click-anim">
-      Services
-    </Link>
-  </NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
-      {serviceItems.map((item) => (
-        <ListItem key={item.title} title={item.title} href={item.href}>
-          {item.description}
-        </ListItem>
-      ))}
-    </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Link href="/services" className="nav-click-anim" onClick={startLoader}>
+                  Services
+                </Link>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
+                  {serviceItems.map((item) => (
+                    <ListItem key={item.title} title={item.title} href={item.href} onClick={startLoader}>
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
 
-            {/* Single Link: Process */}
+            {/* Single Links */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/process" className="nav-click-anim">
+                <Link href="/process" className="nav-click-anim" onClick={startLoader}>
                   Process
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            {/* SaaS Hub Highlight */}
             <NavigationMenuItem>
               <a
                 href="https://saas.codelitsstudio.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="saas-hub-shimmer nav-click-anim"
+                onClick={startLoader}
               >
                 SaaS Hub
               </a>
             </NavigationMenuItem>
 
-            {/* Dropdown: AI Tools */}
+            {/* AI Tools */}
             <NavigationMenuItem>
-  <NavigationMenuTrigger>
-    <Link href="/ai" className="nav-click-anim">
-      AI Tools
-    </Link>
-  </NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
-      {aiItems.map((item) => (
-        <ListItem key={item.title} title={item.title} href={item.href}>
-          {item.description}
-        </ListItem>
-      ))}
-    </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Link href="/ai" className="nav-click-anim" onClick={startLoader}>
+                  AI Tools
+                </Link>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[600px] p-4 grid-cols-2 gap-3">
+                  {aiItems.map((item) => (
+                    <ListItem key={item.title} title={item.title} href={item.href} onClick={startLoader}>
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
 
-            {/* Single Link: Blog */}
+            {/* Other links */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/blog" className="nav-click-anim">
+                <Link href="/blog" className="nav-click-anim" onClick={startLoader}>
                   Blog
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-
-            {/* Single Link: About Us */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/team" className="nav-click-anim">
-                  About Us
+                <Link href="/studio" className="nav-click-anim" onClick={startLoader}>
+                  Studio
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -236,60 +260,43 @@ export function Header() {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-4">
           <Button asChild>
-            <Link href="/contact">
+            <Link href="/contact" onClick={startLoader}>
               Let&apos;s Talk <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
 
         {/* Mobile Navigation */}
-           <div className="md:hidden">
+        <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Toggle navigation menu"
-                className="text-white"
-              >
+              <Button variant="ghost" size="icon" aria-label="Toggle navigation menu" className="text-white">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-
-            <SheetContent showCloseButton={false}
+            <SheetContent
+              showCloseButton={false}
               side="right"
               className="fixed top-0 right-0 w-full h-full bg-black/30 backdrop-blur-md p-6 z-50 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <SheetTitle className="sr-only">
-                Mobile Navigation Menu
-              </SheetTitle>
-
+              <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
               <div className="flex justify-between items-center mb-6">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2"
-                  onClick={() => setIsOpen(false)}
-                >
-           <img
-            src="/logos/logo.png"
-            alt="CodeLits Studio Logo"
-            className="h-24 w-24 md:h-36 md:w-36 object-contain"
-          />
+                <Link href="/" className="flex items-center gap-2" onClick={() => { setIsOpen(false); startLoader(); }}>
+                  <img src="/logos/logo.png" alt="CodeLits Studio Logo" className="h-24 w-24 md:h-36 md:w-36 object-contain" />
                 </Link>
                 <SheetClose asChild>
-      <button aria-label="Close">
-        <X className="h-5 w-5" />
-      </button>
-    </SheetClose>
+                  <button aria-label="Close">
+                    <X className="h-5 w-5" />
+                  </button>
+                </SheetClose>
               </div>
-
               <nav className="grid grid-cols-1 gap-4 text-sm text-white">
                 {mobileNavLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => { setIsOpen(false); startLoader(); }}
                     className="nav-click-anim flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/10 transition-all"
                   >
                     <link.icon className="h-4 w-4 text-primary" />
@@ -297,7 +304,6 @@ export function Header() {
                   </Link>
                 ))}
               </nav>
-
               <div className="mt-auto pt-6 text-white/60 text-center text-xs select-none">
                 © 2025 CodeLits Studio Pvt. Ltd.
               </div>
@@ -305,16 +311,21 @@ export function Header() {
           </Sheet>
         </div>
       </div>
+      <div
+        ref={loaderRef}
+        className="absolute bottom-0 left-0 h-[2px] bg-primary origin-left"
+        style={{ width: 0, opacity: 0 }}
+      />
     </header>
   );
 }
 
-// ListItem Component - updated for new Link behavior (no nested <a>)
+// ListItem Component
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { title: React.ReactNode; href: string }
->(({ className, title, children, href, ...props }, ref) => {
-  const isInternal = href && href.startsWith("/");
+  React.ComponentPropsWithoutRef<"a"> & { title: React.ReactNode; href: string; onClick?: () => void }
+>(({ className, title, children, href, onClick, ...props }, ref) => {
+  const isInternal = href.startsWith("/");
 
   const content = (
     <>
@@ -329,12 +340,13 @@ const ListItem = React.forwardRef<
         <NavigationMenuLink asChild>
           <Link
             href={href}
+            onClick={onClick}
+            ref={ref}
             className={cn(
               "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
               className
             )}
             {...props}
-            ref={ref}
           >
             {content}
           </Link>
@@ -343,12 +355,12 @@ const ListItem = React.forwardRef<
     );
   }
 
-  // For external or '#' links render plain <a>
   return (
     <li>
       <NavigationMenuLink asChild>
         <a
           href={href}
+          onClick={onClick}
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
