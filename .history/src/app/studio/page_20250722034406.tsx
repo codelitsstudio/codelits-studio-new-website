@@ -1,0 +1,421 @@
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import TeamPageVideo from '@/components/StudioPageVideo';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight, Users, Award, Handshake, BookOpen } from 'lucide-react';
+import { GridPattern } from '@/components/decoration/GridPattern';
+gsap.registerPlugin(ScrollTrigger);
+
+const leaders = [
+  { name: 'Karri Saarinen', position: 'Co-founder, CEO', avatar: '/images/sujan.JPG' },
+  { name: 'Jori Lallo', position: 'Co-founder', avatar: '/images/leaders/jori.jpg' },
+  { name: 'Tuomas Artman', position: 'Co-founder, CTO', avatar: '/images/leaders/tuomas.jpg' },
+  { name: 'Tom Moor', position: 'Head of Engineering', avatar: '/images/leaders/tom.jpg' },
+  { name: 'Nan Yu', position: 'Head of Product', avatar: '/images/leaders/nan.jpg' },
+];
+
+const crew = [
+  { name: 'Miles Clements', position: 'Partner', avatar: '/images/crew/miles.jpg' },
+  { name: 'Stephanie Zhan', position: 'Partner', avatar: '/images/crew/stephanie.jpg' },
+  { name: 'Dylan Field', position: 'CEO, Figma', avatar: '/images/crew/dylan.jpg' },
+  { name: 'Patrick Collison', position: 'CEO, Stripe', avatar: '/images/crew/patrick.jpg' },
+  { name: 'Stewart Butterfield', position: 'Former CEO, Slack', avatar: '/images/crew/stewart.jpg' },
+  { name: 'Guillermo Rauch', position: 'CEO, Vercel', avatar: '/images/crew/guillermo.jpg' },
+  { name: 'Dick Costolo', position: 'Former CEO, Twitter', avatar: '/images/crew/dick.jpg' },
+  { name: 'Josh Miller', position: 'CEO, Browser Company', avatar: '/images/crew/josh.jpg' },
+];
+
+
+const newsItems = [
+  {
+    title: 'Robotics Workshop in SAARC - CodeLits Studio',
+    date: 'जेठ १, २०८२',
+    image: '/images/nepalbodh.jpeg',
+    link: '/blog/project-workflows',
+  },
+  {
+    title: 'Sudurpaschim first robotics & esports tournament - organized by Codelits Studio',
+    date: 'जेठ १०, २०८२',
+    image: '/images/tech-fest-2082.jpg',
+    link: '/blog/remote-productivity',
+  },
+  {
+    title: 'Scaling engineering teams effectively',
+    date: 'June 20, 2025',
+    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    link: '/blog/scaling-teams',
+  },
+  {
+    title: 'Codelits Studio at Global Student Entrepreneur Awards 2025',
+    date: 'Jan, 2025',
+    image: '/images/cls-gsea.jpg',
+    link: '/blog/user-feedback',
+  },
+  {
+    title: 'The future of software tools',
+    date: 'May 25, 2025',
+    image: 'https://images.unsplash.com/photo-1699275303913-7ef75b618dd6?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    link: '/blog/future-software-tools',
+  },
+  // {
+  //   title: 'Balancing speed and quality',
+  //   date: 'May 10, 2025',
+  //   image: 'https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1867&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //   link: '/blog/speed-quality',
+  // },
+  // {
+  //   title: 'Effective team communication',
+  //   date: 'April 30, 2025',
+  //   image: 'https://plus.unsplash.com/premium_photo-1661778490723-371305b4fb06?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //   link: '/blog/team-communication',
+  // },
+  // {
+  //   title: 'Integrating AI in workflows',
+  //   date: 'April 15, 2025',
+  //   image: 'https://plus.unsplash.com/premium_photo-1683121710572-7723bd2e235d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //   link: '/blog/ai-integration',
+  // },
+  {
+    title: 'Security best practices for teams',
+    date: 'April 1, 2025',
+    image: 'https://images.unsplash.com/photo-1496368077930-c1e31b4e5b44?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    link: '/blog/security-practices',
+  },
+];
+
+
+
+
+const missionTitle = 'Our Mission';
+const missionDesc =
+  'Our mission is to ensure software development teams can do their best work. That’s why we created Shortcut—the most intuitive, lightweight and enjoyable project management platform teams actually want to use. By breaking down barriers, we help teams focus on what matters: working together to create products their customers love.';
+
+const values = [
+  {
+    title: 'Treat people right',
+    desc: 'We are respectful, thoughtful, and empathetic when interacting with each other, our clients, and our partners.',
+    icon: Users,
+  },
+  {
+    title: 'Spread joy',
+    desc: 'Our work should make people smile. There’s plenty of boring software in the world, we don’t need to add to the list.',
+    icon: Award,
+  },
+  {
+    title: 'Take ownership',
+    desc: 'We own our decisions, take action, and independently adapt to circumstances to deliver the best possible results.',
+    icon: Handshake,
+  },
+  {
+    title: 'Be open by default',
+    desc: 'We work and communicate openly, honestly, and responsibly.',
+    icon: BookOpen,
+  },
+];
+
+const leadersSummary =
+  'We break down barriers so teams can focus on what matters – working together to create products for their customers.';
+
+export default function TeamPage() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const missionRef = useRef<HTMLDivElement>(null);
+
+
+useEffect(() => {
+  if (!sectionRef.current) return;
+
+  const ctx = gsap.context(() => {
+    if (titleRef.current) {
+      gsap.from(titleRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power4.out',
+      });
+    }
+
+    if (videoRef.current) {
+      gsap.from(videoRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        delay: 0.3,
+        ease: 'power3.out',
+      });
+    }
+
+if (missionRef.current) {
+  gsap.from(missionRef.current, {
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    delay: 0.4,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: missionRef.current,
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+      once: true,
+      // markers: true, // enable to debug positions
+    },
+    immediateRender: false, // Important to avoid flicker on load
+  });
+}
+
+
+    if (cardsRef.current) {
+      gsap.fromTo(
+        cardsRef.current.children,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          delay: 0.5,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true,
+            // markers: true, // uncomment to debug
+          },
+        }
+      );
+    }
+  }, sectionRef);
+
+  return () => ctx.revert();
+}, []);
+
+  return (
+<div className="relative min-h-screen w-full" ref={sectionRef}>
+      <div className="relative mx-auto py-16 md:py-24">
+        {/* Title Section */}
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <h1
+            className="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-white"
+            ref={titleRef}
+          >
+Redefining digital — one pixel at a time.          </h1>
+
+          <div className="mt-10" ref={videoRef}>
+            <TeamPageVideo />
+          </div>
+        </div>
+
+        {/* Mission Section - Updated as requested */}
+  {/* ───── Mission Section (Styled like "Client Work") ───── */}
+<section
+  ref={missionRef}
+  className="category-card group relative rounded-2xl overflow-hidden border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30 col-span-2 max-w-[1160px] mx-auto mb-20"
+>
+  <div className="relative z-10 flex flex-col h-full p-8 justify-between">
+<div>
+  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+    <BookOpen className="h-6 w-6 text-primary" />
+  </div>
+  <h2 className="font-headline text-2xl font-bold text-white">{missionTitle}</h2>
+</div>
+<p className="mt-4 text-sm text-muted-foreground w-full">{missionDesc}</p>
+
+
+    
+  </div>
+
+  {/* Optional: Grid Pattern like PortfolioPage */}
+  <div className="absolute inset-0 pointer-events-none opacity-30">
+    <GridPattern
+      width={40}
+      height={40}
+      x={-1}
+      y={-1}
+      className="absolute inset-0 h-full w-full stroke-primary/10"
+    />
+  </div>
+</section>
+
+
+{/* ───── Values Section (Styled like 2 stacked Portfolio Cards) ───── */}
+<section className="max-w-6xl mx-auto mb-20">
+  <h2 className=" text-3xl font-bold font-headline mb-8 text-center">Our Values</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={cardsRef}>
+    {values.map(({ title, desc, icon: Icon }) => (
+      <div
+        key={title}
+        className="category-card group relative rounded-2xl overflow-hidden border shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30 p-8"
+      >
+        <div className="relative z-10 flex flex-col h-full justify-between">
+          <div>
+         <div className="mb-4 flex items-center gap-3">
+  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+    <Icon className="h-6 w-6 text-primary" />
+  </div>
+  <h3 className="font-headline text-2xl font-bold text-white">{title}</h3>
+</div>
+<p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+
+          </div>
+
+        </div>
+        {/* Optional background layer */}
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <GridPattern
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className="absolute inset-0 h-full w-full stroke-primary/10"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+        {/* Hiring Button */}
+      <div className="max-w-5xl mx-auto text-center mb-20">
+  <Button asChild size="lg" variant="outline">
+    <Link href="/careers">Get Hired →</Link>
+  </Button>
+</div>
+
+
+        {/* Team Grid Section */}
+<section className="mb-20 w-full pt-16 pb-32 relative overflow-hidden">
+  {/* Blur overlay */}
+  <GridPattern
+    width={40}
+    height={40}
+    x={-1}
+    y={-1}
+    className="grid-pattern absolute inset-0 h-full w-full stroke-primary/10 opacity-40 z-0 [mask-image:linear-gradient(to_bottom,transparent_0%,white_10%,white_90%,transparent_100%)]"
+  />
+
+  <div className="max-w-6xl mx-auto px-4 relative z-20">
+
+    {/* Leaders Heading */}
+    <h2 className="font-headline text-3xl mt-10 font-bold mb-12 text-center text-white">
+      Meet the <span className="text-primary underline">Leaders</span> behind Codelits Studio
+    </h2>
+
+
+ {/* Leaders Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+  {leaders.map(({ name, position, avatar }) => (
+    <div key={name + '-leader'} className="group">
+      <div className="w-32 aspect-square rounded-xl overflow-hidden group">
+        <Image
+          src={avatar}
+          alt={name}
+          width={144}
+          height={144}
+          className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+        />
+      </div>
+      <div className="mt-4 flex items-center justify-start gap-14">
+        <div>
+          <p className="font-semibold text-lg text-white group-hover:text-primary transition-colors">
+            {name}
+          </p>
+          <p className="text-sm text-muted-foreground">{position}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+    {/* General Members Heading */}
+    <h2 className="font-headline text-3xl mt-10 font-bold mb-12 text-center text-white">
+      Meet the <span className="text-primary underline">Crew</span> of Codelits Studio
+    </h2>
+
+{/* Crew Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+  {crew.map(({ name, position, avatar }) => (
+    <div key={name + '-crew'} className="group">
+      <div className="w-32 aspect-square rounded-xl overflow-hidden group">
+        <Image
+          src={avatar}
+          alt={name}
+          width={144}
+          height={144}
+          className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+        />
+      </div>
+      <div className="mt-4 flex items-center justify-start gap-14">
+        <div>
+          <p className="font-semibold text-lg text-white group-hover:text-primary transition-colors">
+            {name}
+          </p>
+          <p className="text-sm text-muted-foreground">{position}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+  </div>
+</section>
+
+
+
+
+
+
+        {/* News Section - Transparent cards without borders */}
+        <section className="max-w-6xl mx-auto mb-20">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="font-headline text-3xl font-bold text-white">News</h2>
+            <Link href="/blog">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground">
+                View All <ArrowRight className="h-3 w-3" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {newsItems.slice(0, 6).map(({ title, date, image, link }) => (
+              <Link
+                href={link}
+                key={title}
+                className="group block rounded-lg overflow-hidden"
+              >
+                <div className="relative w-full h-40 rounded-lg overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    priority
+                  />
+                </div>
+                <div className="mt-3">
+                  <p className="text-xs text-muted-foreground mb-1">{date}</p>
+                  <h3 className="font-medium text-sm text-white group-hover:text-primary transition-colors">
+                    {title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+
+       
+      </div>
+    </div>
+  );
+}
