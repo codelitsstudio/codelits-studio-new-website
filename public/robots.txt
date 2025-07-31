@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://codelitsstudio.com
+
+# Sitemaps
+Sitemap: https://codelitsstudio.com/sitemap.xml
