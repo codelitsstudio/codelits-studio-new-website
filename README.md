@@ -1,89 +1,54 @@
-# CodeLits Studio - Next.js New Updated Website
+# CodeLits Studio – Next.js Updated Website
 
-
-<p align="center">
-  A cutting-edge, feature-rich website built with Next.js, ShadCN UI, and an integrated AI content assistant powered by Genkit.
-</p>
+A modern, feature-rich website built with Next.js, ShadCN UI, and integrated AI content tools powered by Genkit.
 
 ---
 
-## ✨ Key Features
+## Overview
 
-This project is more than just a static website. It's a powerful, modern web application showcasing the capabilities of a top-tier digital agency.
-
-- **🚀 Modern Tech Stack**: Built with Next.js App Router for optimal performance and developer experience.
-- **🎨 Stunning UI/UX**: A sleek, professional design using Tailwind CSS and ShadCN UI components.
-- **🎬 Advanced Animations**: Smooth, engaging animations powered by GSAP (GreenSock Animation Platform) and Framer Motion for a premium feel.
-- **🤖 AI-Powered Assistants**: An integrated admin dashboard featuring AI tools built with **Genkit** to automate content creation, starting with a Portfolio Copy Generator and many more.
-- **📱 Fully Responsive**: A seamless experience across all devices, from mobile phones to widescreen desktops.
-- **CMS-Ready Structure**: Logically separated data for services and projects, making it easy to integrate a headless CMS.
-- ** navigations**:
-  - **Mega Menu**: Advanced hover-activated dropdowns for easy navigation to nested pages.
-  - **Mobile-Friendly Sheet Menu**: A clean, accessible navigation experience on smaller screens.
-- **📄 Multiple Pages**: A full suite of pages including:
-  - **Homepage**: with multiple animated sections.
-  - **Services**: A detailed breakdown of offerings.
-  - **Portfolio**: A multi-level portfolio with interactive live previews.
-  - **Blog, Team, Contact**: Essential pages for a complete agency presence.
-- **⚡ Performance Optimized**: Leverages Next.js features like Server Components and Image Optimization for fast load times.
+This project is a comprehensive web application that demonstrates the capabilities of a leading digital agency. It features a scalable architecture, advanced UI/UX design, and AI-powered content generation tools integrated directly into the admin dashboard.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-- **Framework**: [Next.js](https://nextjs.org/) 15 (App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
-- **Animations**: [GSAP (GreenSock)](https://gsap.com/)
-- **AI Toolkit**: [Genkit](https://firebase.google.com/docs/genkit)
-- **Forms**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+- **Modern Technology Stack**: Developed using Next.js (App Router) for optimized performance and developer productivity.
+- **Professional UI/UX**: Designed with Tailwind CSS and ShadCN UI components for a clean and consistent user experience.
+- **Advanced Animations**: Utilizes GSAP and Framer Motion to deliver smooth and engaging animations throughout the site.
+- **AI Content Assistant**: Integrated admin dashboard equipped with AI tools built using Genkit, including a Portfolio Copy Generator and plans for additional tools.
+- **Responsive Design**: Fully responsive layout that adapts seamlessly across mobile, tablet, and desktop devices.
+- **CMS-Ready Data Structure**: Well-organized services and projects data structure to facilitate easy integration with headless CMS solutions.
+- **Enhanced Navigation**:
+  - Mega Menu with hover-activated dropdowns for intuitive navigation of nested pages.
+  - Mobile-friendly sheet menu to maintain usability on smaller screens.
+- **Comprehensive Pages**: Includes homepage, services, portfolio with interactive previews, blog, team, and contact pages.
+- **Performance Optimized**: Leverages Next.js features such as server components and built-in image optimization to ensure fast load times.
 
 ---
 
-## 🚀 Getting Started
+## Technology Stack
 
-Follow these instructions to get the project up and running on your local machine for development and testing purposes.
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: ShadCN UI
+- **Animations**: GSAP (GreenSock Animation Platform), Framer Motion
+- **AI Integration**: Genkit
+- **Form Handling**: React Hook Form with Zod validation
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (v18 or later recommended)
-- `npm` or your favorite package manager
+- Node.js v18 or later
+- npm or preferred package manager
 
 ### Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/codelitsstudio/codelits-studio-new-website.git
-    cd codelits-studio-new-website
-    ```
+1. Clone the repository:
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Set up environment variables:**
-    Create a `.env` file in the root of the project and add your Google AI API key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
-    ```env
-    GOOGLE_API_KEY=your_google_api_key_here
-    ```
-
-### Running the Application
-
-1.  **Start the development server:**
-    This command starts the Next.js application.
-    ```bash
-    npm run dev
-    ```
-    The application will be available at `http://localhost:9002`.
-
-2.  **Start the Genkit development server:**
-    For the AI tools to function, you need to run the Genkit server in a separate terminal.
-    ```bash
-    npm run genkit:dev
-    ```
-    The Genkit development UI will be available at `http://localhost:4000`.
-
----
-
+   ```bash
+   git clone https://github.com/codelitsstudio/codelits-studio-new-website.git
+   cd codelits-studio-new-website
